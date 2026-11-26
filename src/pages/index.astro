@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { TAGLINE, fileUrl, loadPosts, longDate, pageCount, postUrl } from '../lib/site';
+
+const posts = await loadPosts();
+---
+
+<Base>
+  <p class="intro">{TAGLINE}</p>
+  {
+    posts.length === 0 ? (
+      <p class="muted">No worksheets yet.</p>
+    ) : (
+      <ul class="worksheet-list">
+        {posts.map((post) => (
+          <li>
+            <a class="thumb" href={postUrl(post)} aria-hidden="true" tabindex="-1">
+              {post.data.thumb && <img src={fileUrl(post.data.thumb)} alt="" loading="lazy" />}
+            </a>
+            <div>
+              <a class="index-title" href={postUrl(post)}>
+                {post.data.title}
+              </a>
+              <p>{post.data.summary}</p>
+              <p class="meta">
+                {post.data.level} · {pageCount(post.data.pages)} · {longDate(post.data.date)} ·{' '}
+                <a href={fileUrl(post.data.pdf)}>Download PDF</a>
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Base>

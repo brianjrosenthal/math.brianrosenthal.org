@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/mathpost.mjs brief)",
+      "Bash(node scripts/mathpost.mjs render)",
+      "Bash(node scripts/mathpost.mjs publish:*)",
+      "Edit(.run/**)",
+      "Read(.run/**)"
+    ]
+  }
+}

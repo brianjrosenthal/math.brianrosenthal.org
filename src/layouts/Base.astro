@@ -1,0 +1,52 @@
+---
+import '../styles/global.css';
+import { SITE_NAME, TAGLINE, url } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = TAGLINE } = Astro.props;
+const pageTitle = title ? `${title} · ${SITE_NAME}` : SITE_NAME;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const path = Astro.url.pathname;
+const nav = [
+  { href: url('/'), label: 'Worksheets', current: !path.includes('/about') },
+  { href: url('/about/'), label: 'About', current: path.includes('/about') },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title ?? SITE_NAME} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="site-name" href={url('/')}>{SITE_NAME}</a>
+        <nav aria-label="Main">
+          {nav.map((item) => <a href={item.href} aria-current={item.current ? 'page' : undefined}>{item.label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <p><a href={url('/')}>Worksheets</a> · <a href={url('/about/')}>About</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

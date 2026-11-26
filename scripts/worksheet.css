@@ -1,0 +1,201 @@
+/* The print stylesheet every generated worksheet gets. scripts/prompt.md
+   describes the classes to the writer: change both together. */
+
+@page {
+  size: letter;
+  margin: 0.7in 0.75in 0.8in;
+
+  @bottom-center {
+    content: 'math.brianrosenthal.org  ·  page ' counter(page);
+    font: 9pt system-ui, sans-serif;
+    color: #777;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font: 13pt/1.45 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #1d1f2b;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  margin: 0;
+}
+
+/* ---- Title block ---- */
+
+.head {
+  padding: 0.16in 0.25in;
+  border-radius: 10px;
+  background: #1f2547;
+  color: #fff;
+}
+
+.head h1 {
+  margin: 0;
+  font-size: 21pt;
+  line-height: 1.15;
+}
+
+.head p {
+  margin: 0.04in 0 0;
+  color: #ffd27a;
+  font-weight: 600;
+}
+
+.name-line {
+  display: flex;
+  gap: 0.4in;
+  margin: 0.2in 0 0.05in;
+  font-size: 11pt;
+}
+
+.name-line span {
+  flex: 1;
+  border-bottom: 1px solid #555;
+  padding-bottom: 0.02in;
+}
+
+.name-line span:last-child {
+  flex: 0 0 2in;
+}
+
+h2 {
+  margin: 0.28in 0 0.08in;
+  font-size: 13pt;
+  color: #1f6f78;
+  break-after: avoid;
+}
+
+p {
+  margin: 0 0 0.1in;
+}
+
+/* A shaded box for a worked example or a rule to remember. */
+.box {
+  margin: 0.15in 0;
+  padding: 0.13in 0.2in;
+  border-radius: 8px;
+  background: #eef4f5;
+  break-inside: avoid;
+}
+
+.box > :last-child {
+  margin-bottom: 0;
+}
+
+.box.tip {
+  background: #fdf1d6;
+}
+
+/* ---- Problems ---- */
+
+ol.problems {
+  margin: 0.1in 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: problem var(--start, 0);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.16in 0.4in;
+}
+
+ol.problems.cols-2 { grid-template-columns: repeat(2, 1fr); }
+ol.problems.cols-3 { grid-template-columns: repeat(3, 1fr); }
+ol.problems.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+ol.problems > li {
+  counter-increment: problem;
+  display: flex;
+  align-items: center;
+  gap: 0.1in;
+  min-height: 0.55in;
+  break-inside: avoid;
+}
+
+ol.problems > li::before {
+  content: counter(problem) '.';
+  flex: 0 0 auto;
+  min-width: 0.3in;
+  font-weight: 700;
+  color: #626779;
+}
+
+/* More room under each problem, for work that needs space. */
+ol.problems.roomy > li {
+  align-items: flex-start;
+  min-height: 1.25in;
+}
+
+ol.problems.tall > li {
+  align-items: flex-start;
+  min-height: 2.1in;
+}
+
+/* A line to write the answer on. */
+.blank {
+  display: inline-block;
+  min-width: 0.9in;
+  border-bottom: 1px solid #444;
+  height: 1em;
+  vertical-align: baseline;
+}
+
+.blank.long {
+  min-width: 2in;
+}
+
+math {
+  font-size: 1.3em;
+}
+
+mfrac {
+  padding: 0 0.04em;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0.12in 0;
+}
+
+th,
+td {
+  padding: 0.05in 0.14in;
+  border: 1px solid #999;
+  text-align: center;
+}
+
+svg {
+  max-width: 100%;
+}
+
+/* ---- Answer key: always starts a new page ---- */
+
+.answers {
+  break-before: page;
+}
+
+.answers h1 {
+  margin: 0 0 0.15in;
+  padding-bottom: 0.06in;
+  border-bottom: 2px solid #1f2547;
+  font-size: 17pt;
+}
+
+.answers ol.problems {
+  gap: 0.05in 0.4in;
+}
+
+.answers ol.problems > li {
+  min-height: 0.42in;
+}
+
+.note {
+  font-size: 10.5pt;
+  color: #555;
+}
